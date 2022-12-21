@@ -1,0 +1,11 @@
+absl-py==1.3.0
+glog==0.3.1
+onnxruntime==1.13.1
+pandas==1.3.4
+scikit-learn==1.2.0
+rich==12.6.0
+tqdm==4.64.1
+tifffile==2022.10.10
+opencv-python==4.6.0.66
+pillow==9.3.0
+scikit-image==0.19.3

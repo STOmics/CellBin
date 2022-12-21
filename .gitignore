@@ -1,0 +1,6 @@
+docs/build/
+docs/source/
+dcos/make.bat
+docs/Makefile
+.idea/
+stereocell/segmentation/weights/
