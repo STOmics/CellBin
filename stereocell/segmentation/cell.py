@@ -71,7 +71,7 @@ def cell_seg(input: str, output: str, gpu: str=-1, num_threads: int=0):
     glog.info(f"Weight loaded, start predict")
     pred = sg.f_predict(img)
     glog.info(f"Predict finish,start write")
-    tifffile.imwrite(output, pred)
+    tifffile.imwrite(output, pred, compression="zlib", compressionargs={"level": 8})
     glog.info(f"Work finished.")
 
 

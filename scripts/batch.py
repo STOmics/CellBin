@@ -19,4 +19,4 @@ for image_path in todo:
     cmd = r'python ..\stereocell\stitching\stitch.py --input {} --output {}'.format(
         image_path, os.path.join(out_path, '{}.tif'.format(prefix)))
     os.system(cmd)
-    # break
+    break
