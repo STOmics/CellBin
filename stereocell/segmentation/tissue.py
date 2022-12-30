@@ -62,7 +62,6 @@ def tissue_cut(input: str, output: str, gpu: str=-1, num_threads: int=0):
 
     img = tifffile.imread(input)
     sg = TissueCut(gpu=gpu, num_threads=int(num_threads))
-    glog.info(f"Weights loaded, start predict.")
     img, pred = sg.f_predict(img)
     glog.info(f"Predict finish, start write.")
     tifffile.imwrite(output, pred, compression="zlib", compressionargs={"level": 8})

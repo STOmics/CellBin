@@ -31,6 +31,9 @@ class cl_onnx_net(object):
             self._model = onnxruntime.InferenceSession(self._model_path, providers=self._providers,
                                                        provider_options=self._providers_id, sess_options=sessionOptions)
             self._input_name = self._model.get_inputs()[0].name
+            glog.info(f"Weight loaded, start predict")
+        else:
+            glog.warn("Weight file does not exist in {}.".format(self._model_path))
 
     def f_predict(self, img):
         pred = self._model.run(None, {self._input_name: np.expand_dims(np.array([img], dtype=np.float32), axis=3)})[0]

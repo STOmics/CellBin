@@ -59,5 +59,5 @@ class cl_predict(object):
             pred = np.zeros(img.shape, np.uint8)
         else:
             pred = self._model.f_predict(img)[0]
-        pred = f_postprocess(pred)
+        pred = f_post_process(pred)
         return pred

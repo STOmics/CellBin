@@ -17,7 +17,7 @@ class CellSeg(object):
 
     def __init__(self, gpu="-1", num_threads=0):
         """
-        :param model_path:模型路径
+        :param model_path: path of the CNN model
         """
         self.WIN_SIZE = None
         self._model_path = None
@@ -53,7 +53,7 @@ class CellSeg(object):
         """
 
         :param img:CHANGE
-        :return: 掩模大图
+        :return: mask
         """
         img = f_preprocess(img)
         pred = f_run_with_split(img, self.WIN_SIZE, self.overlap, True, 'minimum', False, 1000, np.uint8,
@@ -68,7 +68,6 @@ def cell_seg(input: str, output: str, gpu: str=-1, num_threads: int=0):
 
     img = tifffile.imread(input)
     sg = CellSeg(gpu=gpu, num_threads=int(num_threads))
-    glog.info(f"Weight loaded, start predict")
     pred = sg.f_predict(img)
     glog.info(f"Predict finish,start write")
     tifffile.imwrite(output, pred, compression="zlib", compressionargs={"level": 8})

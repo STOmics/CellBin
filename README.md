@@ -48,7 +48,7 @@ python .\cell_bin.py \
 
 In shell
 ```shell
-python .\correct.py \
+python .\stitch.py \
 --input D:\\code\\mine\\github\\StereoCell\\data \
 --output D:\\code\\mine\\github\\StereoCell\\data \
 --overlap 0.12
@@ -88,8 +88,8 @@ In shell
 ```shell
 python correct.py \
 --way fast \
---mask D:\StereoCell\data\cell_mask.tif \
---matrix D:\StereoCell\data\gene.gem.gz \
+--mask_path D:\StereoCell\data\cell_mask.tif \
+--matrix_path D:\StereoCell\data\gene.gem.gz \
 --output D:\StereoCell\data
 ```
 
