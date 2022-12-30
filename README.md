@@ -50,15 +50,15 @@ In shell
 ```shell
 python .\stitch.py \
 --input D:\\code\\mine\\github\\StereoCell\\data \
---output D:\\code\\mine\\github\\StereoCell\\data \
+--output D:\\code\\mine\\github\\StereoCell\\data\\stitched.tif \
 --overlap 0.12
 ```
 or in script
 ```python
 import stitch
 
-input = 'D:\StereoCell\data\gene.gem.gz'
-output = 'D:\StereoCell\data\cell_mask.tif'
+input = 'D:\\code\\mine\\github\\StereoCell\\data'
+output = 'D:\\code\\mine\\github\\StereoCell\\data\\stitched.tif'
 stitch.stitch(input, output, overlap=0.12)
 ```
 </details>
