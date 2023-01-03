@@ -11,18 +11,18 @@ class CellMatrixLoader(object):
         self.cell_data = None
         self.cell_coord = None
         self.cell_exp = None
-    
+
     def load(self, matrix_path, cell_mask_path):
         self.matrix_path = matrix_path
         typeColumn = {
-                        "geneID": 'str',
-                        "x": np.uint32,
-                        "y": np.uint32,
-                        "values": np.uint32,
-                        "UMICount": np.uint32,
-                        "MIDCount": np.uint32,
-                        "MIDCounts": np.uint32
-                    }
+            "geneID": 'str',
+            "x": np.uint32,
+            "y": np.uint32,
+            "values": np.uint32,
+            "UMICount": np.uint32,
+            "MIDCount": np.uint32,
+            "MIDCounts": np.uint32
+        }
 
         header = self._parse_matrix_head()
         glog.info("Loading matrix data...")
@@ -30,15 +30,25 @@ class CellMatrixLoader(object):
         x0, y0, x1, y1 = [genedf['x'].min(), genedf['y'].min(), genedf['x'].max(), genedf['y'].max()]
         glog.info('Matrix original point is ({}, {}), shape is {}'.format(x0, y0, (y1 - y0 + 1, x1 - x0 + 1)))
 
-        if "UMICount" in genedf.columns: genedf = genedf.rename(columns={'UMICount':'MIDCount'})
-        if "MIDCounts" in genedf.columns: genedf = genedf.rename(columns={'MIDCounts':'MIDCount'})
+        if "UMICount" in genedf.columns: genedf = genedf.rename(columns={'UMICount': 'MIDCount'})
+        if "MIDCounts" in genedf.columns: genedf = genedf.rename(columns={'MIDCounts': 'MIDCount'})
 
         tissuedf = pd.DataFrame()
         glog.info('Loading cell mask...')
         cell_mask = tifffile.imread(cell_mask_path)
+
+        x, y = np.where(cell_mask > 0)
+        min_ = min(np.min(x), np.min(y))
+        max_ = max(np.max(x), np.max(y))
+        mask_crop = cell_mask[min_:max_ + 1, min_:max_ + 1]
+
         glog.info('Mask shape, Matrix shape {}, ({}, {})'.format(cell_mask.shape, y1 - y0 + 1, x1 - x0 + 1))
         assert ((y1 - y0 + 1 == cell_mask.shape[0]) and (x1 - x0 + 1 == cell_mask.shape[1]))
-        _, markers = cv.connectedComponents(cell_mask)
+        _, markers = cv.connectedComponents(mask_crop, connectivity=4)
+
+        img = np.zeros((cell_mask.shape[0], cell_mask.shape[1]), dtype=np.int32)
+        img[min_: max_ + 1, min_: max_ + 1] += markers
+        markers = img
 
         glog.info('Cell mask shape is {}, cell count is {}'.format(cell_mask.shape, _ - 1))
         dst = np.nonzero(markers)
@@ -70,7 +80,8 @@ class CellMatrixLoader(object):
         if self.matrix_path.endswith('.gz'):
             import gzip
             f = gzip.open(self.matrix_path, 'rb')
-        else: f = open(self.matrix_path, 'rb')
+        else:
+            f = open(self.matrix_path, 'rb')
 
         glog.info('Start parse head info of file <{}>'.format(self.matrix_path))
 
@@ -83,7 +94,8 @@ class CellMatrixLoader(object):
                 header += l
                 num_of_header_lines += 1
                 eoh = f.tell()  # get end-of-header position
-            else: break
+            else:
+                break
         # find start of expression matrix
         f.seek(eoh)
         return num_of_header_lines
@@ -118,4 +130,3 @@ class CellCorrect(object):
 #
 # if __name__ == '__main__':
 #     main()
-

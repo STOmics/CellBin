@@ -90,7 +90,7 @@ python correct.py \
 --way fast \
 --mask_path D:\StereoCell\data\cell_mask.tif \
 --matrix_path D:\StereoCell\data\gene.gem.gz \
---output D:\StereoCell\data
+--out_path D:\StereoCell\data
 ```
 
 or in script
@@ -100,8 +100,8 @@ import correct
 
 mask_path = 'D:\StereoCell\data\gene.gem.gz'
 matrix_path = 'D:\StereoCell\data\cell_mask.tif'
-output = 'D:\StereoCell\data'
-correct.adjust('fast', mask_path, matrix_path, output, radius=50, process=10, threshold=20)
+out_path = 'D:\StereoCell\data'
+correct.adjust('fast', mask_path, matrix_path, out_path, radius=50, process=10, threshold=20)
 ```
 </details>
 
