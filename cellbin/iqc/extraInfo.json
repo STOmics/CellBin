@@ -1,0 +1,12 @@
+{
+  "Info": {
+    "Manufacturer": "Zeiss",
+    "Chip": "FP2",
+    "ScanObjective": "10",
+    "Scale": "0.438276",
+    "FOVWidth": "3064",
+    "FOVHeight": "2041",
+    "Overlap": "0.1",
+    "Angle": 10000.0
+  }
+}

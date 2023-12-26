@@ -1,124 +1,110 @@
 
 # StereoCell
-StereoCell is a tool for generating single-cell gene expression data
 
-<br><img src="docs/method.svg"><br>
+<div align="center">
+  <img src="docs/StereoCell.png" width=567>
+    <h6>
+      StereoCell: a highly accurate single-cell gene expression generation software for high resolution spatial transcriptomics.
+    </h6>
+</div>
+<br>
 
 ## Installation
-
-- pipeline
-
-It supported on Stitching, Tissue segmentation, Cell segmentation and Cell labelling. Easy installation based on ```python==3.8``` like,
+* Download the [dev branch](https://codeload.github.com/STOmics/StereoCell/zip/refs/heads/dev) in StereoCell repo, and install requirements.txt in a ```python==3.8``` environment.
 ```text
-pip install -r requirements.txt
+# python3.8 in conda env
+conda create --name=StereoCell python=3.8
+conda activate StereoCell
+cd StereoCell-dev
+pip install -r requirements.txt  # install
 ```
-If you need run the segmentation module, download the weights files first, then modify the file -> [weights.json](./stereocell/segmentation/weights.json). Model zoo,
+* The ```pyvips``` package needs to be installed separately. The following is referenced from [pyvips](https://libvips.github.io/pyvips/README.html#non-conda-install)
 
-|       Function       | ML framework | resolution |                     Download                     |
-|:--------------------:|:------------:|:----------:|:------------------------------------------------:|
-|  Cell segmentation   |     onnx     |    256     | [.onnx](https://pan.genomics.cn/ucdisk/s/JvyUze) |
-| Tissue segmentation  |     onnx     |    512     | [.onnx](https://pan.genomics.cn/ucdisk/s/f6VJve) |
-
-- manual tool on _Windows_
-
-It supported on Stitching, Registration, Tissue segmentation and Single cell data visulization. 
- Please download the [installation package](https://pan.genomics.cn/ucdisk/s/FZB3Qf) first, and follow the tutorial step by step. More detail refer [this](https://gitlab.genomics.cn/biointelligence/implab/stero-rnd/advancedtools/cellbin-studio).
-
-## Usage
-We recommend using Manual tool to complete Stitching & Registration module, and Pipeline to complete Segmentation & Cell labelling module
-- [Sample Data](https://pan.genomics.cn/ucdisk/s/ERVbey)  ```Image(FOV tiles, 3X3) and GeneMatrix```
- 
-- Manual tool
-
-Refer the [tutorial](https://gitlab.genomics.cn/biointelligence/implab/stero-rnd/advancedtools/cellbin-studio) step by step
-- About pipeline
-<details close>
-<summary> Segmentation & Cell Labelling </summary>
-
-```shell
-python .\cell_bin.py \
---image_path D:\code\mine\github\StereoCell\data\SS2000_regist.tif \
---matrix_path D:\code\mine\github\StereoCell\data\SS2000.gem.gz  \
---out_path D:\code\mine\github\StereoCell\data
+**On Windows**, first you need to use pip to install like,
+```text
+$ pip install --user pyvips==2.2.1
 ```
-</details>
-
-<details close>
-<summary> Stitching </summary>
-
-In shell
-```shell
-python .\stitch.py \
---input D:\\code\\mine\\github\\StereoCell\\data \
---output D:\\code\\mine\\github\\StereoCell\\data\\stitched.tif \
---overlap 0.12
-```
-or in script
-```python
-import stitch
-
-input = 'D:\\code\\mine\\github\\StereoCell\\data'
-output = 'D:\\code\\mine\\github\\StereoCell\\data\\stitched.tif'
-stitch.stitch(input, output, overlap=0.12)
-```
-</details>
-
-<details close>
-<summary> Segmentation </summary>
-
-In shell
-
-``` cell segmentation
-python .\cell.py \
---input D:\StereoCell\data\image_6467_16800_512_512.tif \
--output D:\StereoCell\data\image_cell.tif \
-```
-or 
-``` tissue segmentation
-python .\tissue.py \
---input D:\StereoCell\data\image_6467_16800_512_512.tif \
--output D:\StereoCell\data\image_tissue.tif \
-```
-</details>
-
-<details close>
-<summary> Cell Labeling </summary>
-In shell
-
-```shell
-python correct.py \
---way fast \
---mask_path D:\StereoCell\data\cell_mask.tif \
---matrix_path D:\StereoCell\data\gene.gem.gz \
---out_path D:\StereoCell\data
-```
-
-or in script
+then you need to download the compiled library from [vips-dev-8.12](https://github.com/libvips/libvips/releases),
+To set PATH from within Python, you need something like this at the start:
 
 ```python
-import correct
-
-mask_path = 'D:\StereoCell\data\gene.gem.gz'
-matrix_path = 'D:\StereoCell\data\cell_mask.tif'
-out_path = 'D:\StereoCell\data'
-correct.adjust('fast', mask_path, matrix_path, out_path, radius=50, process=10, threshold=20)
+import os
+vipshome = 'c:\\vips-dev-8.7\\bin'
+os.environ['PATH'] = vipshome + ';' + os.environ['PATH']
 ```
-</details>
 
-## License and Citation
-Please cite StereoCell in your publications if it helps your research:
+**On Linux**,
+```text
+$ conda install --channel conda-forge pyvips==2.2.1
+```
+* Download the weight files and transfer them to the specified path (if the path does not exist, you can manually create the new folders).<br>
 
-    @article{StereoCell,
-      Author = {BGI Dev Group},
-      Year = {2022}
-    }
+| weight file                                                                                          | specified path                               |
+|------------------------------------------------------------------------------------------------------|---------------------------------------|
+| [sold2_wireframe.tar](https://bgipan.genomics.cn/#/link/CU7nnrRvAYZKoZpYWvuB) , PWD: nJY4                | cellbin\iqc\trackCross_net\sold2\ckpt |
+| [stereocell_bcdu_cell_256x256_220926.pth](https://bgipan.genomics.cn/#/link/CU7nnrRvAYZKoZpYWvuB) , PWD: nJY4     | cellbin\weights                       |
+| [stereocell_bcdu_tissue_512x512_220822.onnx](https://bgipan.genomics.cn/#/link/CU7nnrRvAYZKoZpYWvuB), PWD: nJY4   | cellbin\weights                       |
+
+
+## Tutorials
+
+### Test Data
+Here is a mouse brain data set, which is generated by BGI STOmics. 
+You only need to download the spatial gene expression data [S200000135TL_D1.gem.gz](https://bgipan.genomics.cn/#/link/HvMV45HgXkseepQo0AoO) (PWD: FMYk) and tiles [SS200000135TL_D1.tif.gz](https://bgipan.genomics.cn/#/link/Jchp46A3HfrTVZymKkRF) (PWD: n2Ge). 
+We recommend creating a new "data" folder under StereoCell-dev, and decompressing "SS200000135TL_D1.tif.gz" to this folder. 
+"S200000135TL_D1.gem.gz" does not need to be decompressed.<br>
+
+The purpose of open-sourcing this data set is to promote the research of spatial single-cell data in the field of life 
+sciences through algorithms. STOmics reserves the right to interpret it.
+
+### Command Line
+You can perform StereoCell in one-stop, or perform [image quality control, image stitching, image registration, tissue segmentation, nuclei segmentation, nuclei mask filtering and molecule labeling](docs/modules.md) independently.
+
+StereoCell in one-stop is performed by command:
+
+* ```--tiles_path```  The path of all tiles.
+* ```--gene_exp_data``` The compressed file of spatial gene expression data.
+* ```--output_path``` The output path.
+* ```--chip_no``` Chip number of the Stereo-seq data. 
+
+```shell
+cd scripts
+
+# stereocell
+python stereocell.py
+--tiles_path /data/SS200000135TL_D1
+--gene_exp_data /data/SS200000135TL_D1.gem.gz
+--output_path /data/result
+--chip_no SS200000135TL_D1
+```
+[More about output](docs/details.md)
+
+### GUI
+For some low-quality input data, using the StereoCell pipeline will get wrong results. We have developed a manual tool 
+based on [pyqt5](https://pypi.org/project/PyQt5/) to adapt to this scenario, you can get it through the [cloud disk](https://bgipan.genomics.cn/#/link/qn9MVeFkbSl4i6ULSUvW) (PWD: 6bnz) . 
+We have sorted out the details of installation and operation into the [User Manual](docs/CellbinStudio_Manual_20221212.pdf), which will help you get started quickly.
+The Mainwindow is shown in the figure below,
+<div align="center">
+  <img src="docs/ui.png" width=567>
+    <h6>
+      Fig 1 Main window of CellBinStudio
+    </h6>
+</div>
+
+## License and Citation <br>
+StereoCell is released under the MIT license. Please cite StereoCell in your publications if it helps your research: <br>
+```text
+@article {Li2023.02.28.530414,
+	author = {Li, Mei and Liu, Huanlin and Li, Min and Fang, Shuangsang and Kang, Qiang},
+	title = {StereoCell enables high accuracy single cell segmentation for spatial transcriptomic dataset},
+	year = {2023},
+	URL = {https://www.biorxiv.org/content/early/2023/03/01/2023.02.28.530414},
+	journal = {bioRxiv}
+}
+```
+
     
-## Reference
-
-> https://github.com/matejak/imreg_dft
-
-## Acknowledgements
-
-> https://github.com/rezazad68/BCDU-Net
-
-> https://github.com/libvips/pyvips
+## Reference <br>
+> https://github.com/matejak/imreg_dft <br>
+> https://github.com/rezazad68/BCDU-Net <br>
+> https://github.com/libvips/pyvips <br>
