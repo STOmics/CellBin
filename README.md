@@ -1,3 +1,7 @@
+[![stars](https://img.shields.io/github/stars/STOmics/StereoCell?logo=GitHub&color=green)](https://img.shields.io/github/stars/STOmics/StereoCell) 
+[![downloads](https://static.pepy.tech/personalized-badge/cell-bin?period=total&units=international_system&left_color=grey&right_color=blue&left_text=downloads)](https://www.pepy.tech/projects/cell-bin)
+[![Python Versions](https://img.shields.io/pypi/pyversions/cell-bin.svg)](https://pypi.org/project/cell-bin/)
+[![Modified Apache 2.0](https://img.shields.io/badge/license-MIT-yellow)](https://github.com/vanvalenlab/deepcell-tf/blob/master/LICENSE)
 
 # StereoCell
 
