@@ -1,4 +1,4 @@
-StereoCell allows software flexibility to support individual single-step module operations. 
+CellBin allows software flexibility to support individual single-step module operations. 
 The corresponding execution is placed in directory __scripts__.
 
 ## Image quality control
