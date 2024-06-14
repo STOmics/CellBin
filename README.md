@@ -8,7 +8,7 @@
 <div align="center">
   <img src="docs/StereoCell.png" width=567>
     <h6>
-      CellBin: a highly accurate single-cell gene expression generation software for high resolution spatial transcriptomics.
+      CellBin: a highly accurate single-cell gene expression generation protocol for high resolution spatial transcriptomics.
     </h6>
 </div>
 <br>
