@@ -75,7 +75,7 @@ CellBin in one-stop is performed by command:
 cd scripts
 
 # CellBin
-python cellbin.py
+python pipeline.py
 --tiles_path /data/SS200000135TL_D1
 --gene_exp_data /data/SS200000135TL_D1.gem.gz
 --output_path /data/result
