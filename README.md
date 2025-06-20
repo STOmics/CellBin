@@ -85,7 +85,7 @@ python pipeline.py
 
 ### GUI
 For some low-quality input data, using the CellBin pipeline will get wrong results. We have developed a manual tool 
-based on [pyqt5](https://pypi.org/project/PyQt5/) to adapt to this scenario, you can get it through the [cloud disk](https://bgipan.genomics.cn/#/link/qn9MVeFkbSl4i6ULSUvW) (PWD: 6bnz) . 
+based on [pyqt5](https://pypi.org/project/PyQt5/) to adapt to this scenario, you can get it through the [cloud disk](https://bgipan.genomics.cn/#/link/h6a7lTAabwFerhjuv6ra) (PWD: wCk0) . 
 We have sorted out the details of installation and operation into the [User Manual](docs/CellbinStudio_Manual_20221212.pdf), which will help you get started quickly.
 The Mainwindow is shown in the figure below,
 <div align="center">
